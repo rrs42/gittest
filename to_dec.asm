@@ -39,7 +39,8 @@ to_dec :
 	test [rsp-8], rcx
 	jg .error
 
-	inc rcx
+	;inc rcx
+	add rcx, 1
 
 	test rax, rax
 	jnz .digit
@@ -63,8 +64,10 @@ to_dec :
 	mov bl, byte [rdi]
 	xchg bl, byte [rsi]
 	mov byte [rdi], bl
-	inc rdi
-	dec rsi
+	;inc rdi
+	add rdi, 1
+	;dec rsi
+	sub rsi, 1
 	loop .swaploop
 	jmp .done
 
