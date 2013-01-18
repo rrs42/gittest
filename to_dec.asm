@@ -33,14 +33,13 @@ to_dec :
   .digit:
 	xor rdx,rdx
 	div rbx
-	add rdx, BYTE '0'
+	add rdx, byte '0'
 	mov [rdi+rcx], dl
 
 	test [rsp-8], rcx
 	jg .error
 
-	;inc rcx
-	add rcx, 1
+	add rcx, byte 0x01
 
 	test rax, rax
 	jnz .digit
@@ -64,10 +63,8 @@ to_dec :
 	mov bl, byte [rdi]
 	xchg bl, byte [rsi]
 	mov byte [rdi], bl
-	;inc rdi
-	add rdi, 1
-	;dec rsi
-	sub rsi, 1
+	add rdi, byte 1
+	sub rsi, byte 1
 	loop .swaploop
 	jmp .done
 
