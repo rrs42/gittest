@@ -6,6 +6,8 @@ extern "C" {
 long to_dec( unsigned long value, char * buffer, long buffer_len );
 }
 
+long to_dec_c( unsigned long value, char * buffer, long buffer_len );
+
 /*
 struct timespec diff(struct timespec &start, struct timespec &end)
 {
@@ -46,17 +48,29 @@ int main( int argc, char ** argv )
 	long int duration;
 
 	long test_len;
-	test_len = to_dec( 0xDEADBEEFDEADBEEF, buffer, 32 );
+	test_len = to_dec_c( 0xDEADBEEFDEADBEEF, buffer, 32 );
 	buffer[test_len] = 0x00;
 	printf( "Test 1 0xDEADBEEFDEADBEEF = %s\n", buffer );
 
+	test_len = to_dec( 0xDEADBEEFDEADBEEF, buffer, 32 );
+	buffer[test_len] = 0x00;
+	printf( "Test 2 0xDEADBEEFDEADBEEF = %s\n", buffer );
+
 	test_len = to_dec( 0xFFFFFFFFFFFFFFFF, buffer, 32 );
 	buffer[test_len] = 0x00;
-	printf( "Test 1 0xFFFFFFFFFFFFFFEF = %s\n", buffer );
+	printf( "Test 3 0xFFFFFFFFFFFFFFEF = %s\n", buffer );
+
+	test_len = to_dec_c( 0xFFFFFFFFFFFFFFFF, buffer, 32 );
+	buffer[test_len] = 0x00;
+	printf( "Test 4 0xFFFFFFFFFFFFFFEF = %s\n", buffer );
 
 	test_len = to_dec( (unsigned long)0xFFFFFFFF, buffer, 32 );
 	buffer[test_len] = 0x00;
-	printf( "Test 3 0xFFFFFFFF = %s\n", buffer );
+	printf( "Test 5 0xFFFFFFFF = %s\n", buffer );
+
+	test_len = to_dec_c( (unsigned long)0xFFFFFFFF, buffer, 32 );
+	buffer[test_len] = 0x00;
+	printf( "Test 6 0xFFFFFFFF = %s\n", buffer );
 
 	printf( "Array setup..." ); fflush(NULL);
 
@@ -92,6 +106,34 @@ int main( int argc, char ** argv )
 
 	printf( "to_dec, source is calculated\n" );
 	printf( "Completed in %8.8f sec (%d nsec avg)\n\n", (double)duration/1000000000.0, duration/vals );
+
+	clock_gettime( CLOCK_MONOTONIC, &start );
+
+	for( int x = 0; x < vals ; x++ ) {
+		long len = to_dec_c( val[x], buffer, 32 );
+	}
+
+	clock_gettime( CLOCK_MONOTONIC, &end );
+
+	duration = diff_timespec( start, end );
+
+	printf( "to_dec_c, source is array\n" );
+	printf( "Completed in %8.8f sec (%d nsec avg)\n\n", (double)duration/1000000000.0, duration/vals );
+
+
+	clock_gettime( CLOCK_MONOTONIC, &start );
+
+	for( int x = 0; x < vals ; x++ ) {
+		long len = to_dec_c( x, buffer, 32 );
+	}
+
+	clock_gettime( CLOCK_MONOTONIC, &end );
+
+	duration = diff_timespec( start, end );
+
+	printf( "to_dec_c, source is calculated\n" );
+	printf( "Completed in %8.8f sec (%d nsec avg)\n\n", (double)duration/1000000000.0, duration/vals );
+
 
 	return 0;
 }

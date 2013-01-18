@@ -16,10 +16,13 @@ asmtest : asmtest.o
 asmtest.o : asmtest.asm
 
 
-test_h : test_h.o to_dec.o
-	g++ -g -o test_h test_h.o to_dec.o -lrt
+test_h : test_h.o to_dec.o to_dec_c.o
+	g++ -g -o test_h test_h.o to_dec.o to_dec_c.o -lrt
 
 to_dec.o : to_dec.asm
+
+to_dec_c.o : to_dec_c.c
+	g++ -g -O -c -o to_dec_c.o to_dec_c.c
 
 test_h.o : test_h.c
 	g++ -g -c -o test_h.o test_h.c

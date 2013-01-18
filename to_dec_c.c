@@ -2,7 +2,7 @@
 
 long to_dec_c( unsigned long val, char * buffer, long buffer_len )
 {
-	int x,j,len;
+	long x,j,len;
 
 	for( x = 0; val > 0; x++,val/=10 )
 	{
