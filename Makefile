@@ -1,5 +1,5 @@
 
-all : asmtest test_h 
+all : test_h 
 .PHONY: all
 
 
@@ -8,7 +8,7 @@ clean :
 .PHONY: clean
 
 %.o : %.asm
-	nasm -f elf64 -g -l $(basename $<).lst -o $@ $<
+	nasm -f macho64 -g -l $(basename $<).lst -o $@ $<
 
 asmtest : asmtest.o
 	ld -o $@ $^
@@ -17,7 +17,7 @@ asmtest.o : asmtest.asm
 
 
 test_h : test_h.o to_dec.o to_dec_c.o
-	g++ -g -o test_h test_h.o to_dec.o to_dec_c.o -lrt
+	g++ -g -o test_h test_h.o to_dec.o to_dec_c.o 
 
 to_dec.o : to_dec.asm
 
