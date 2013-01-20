@@ -39,7 +39,7 @@ to_dec :
 	test [rsp-8], rcx
 	jg .error
 
-	add rcx, byte 0x01
+	add rcx, byte 1
 
 	test rax, rax
 	jnz .digit
