@@ -69,7 +69,7 @@ to_dec :
 	jmp .done
 
   .error:
-	mov rax, -1
+	mov rax, qword -1
 	
   .done:
 	multipop rbx, rbp
