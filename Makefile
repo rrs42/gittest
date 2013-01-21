@@ -2,7 +2,9 @@
 all : test_h 
 .PHONY: all
 
-ifeq ($(OS),mac)
+UNAME=$(shell uname)
+
+ifeq ($(UNAME),Darwin)
   binfmt=macho64
 else
   binfmt=elf64
@@ -13,8 +15,7 @@ clean :
 .PHONY: clean
 
 %.o : %.asm
-	echo "Binary format : " $OSTYPE
-	nasm -f $(binfmt) -g -l $(basename $<).lst -o $@ $<
+	nasm -f $(binfmt) -D UNAME=$(UNAME) -g -l $(basename $<).lst -o $@ $<
 
 asmtest : asmtest.o
 	ld -o $@ $^

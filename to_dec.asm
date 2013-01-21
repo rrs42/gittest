@@ -14,9 +14,7 @@
 
 section .text
 
-global _to_dec
-
-_to_dec :
+global_sym to_dec
 	; rdi - value
 	; rsi - buffer
 	; rdx - buffer_len
