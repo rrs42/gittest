@@ -24,9 +24,9 @@ void current_utc_time(struct timespec *ts) {
  
 extern "C" {
 long to_dec( unsigned long value, char * buffer, long buffer_len );
+long to_dec_c( unsigned long value, char * buffer, long buffer_len );
 }
 
-long to_dec_c( unsigned long value, char * buffer, long buffer_len );
 
 const long nsec_per_sec = 1000000000;
 

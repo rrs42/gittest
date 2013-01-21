@@ -22,7 +22,7 @@ test_h : test_h.o to_dec.o to_dec_c.o
 to_dec.o : to_dec.asm
 
 to_dec_c.o : to_dec_c.c
-	g++ -g -O -c -o to_dec_c.o to_dec_c.c
+	g++ -g -O2 -c -o to_dec_c.o to_dec_c.c
 
 test_h.o : test_h.c
 	g++ -g -c -o test_h.o test_h.c
