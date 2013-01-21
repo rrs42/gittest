@@ -6,8 +6,10 @@ UNAME=$(shell uname)
 
 ifeq ($(UNAME),Darwin)
   binfmt=macho64
+  extralibs=
 else
   binfmt=elf64
+  extralibs= -lrt
 endif
 
 clean : 
@@ -24,7 +26,7 @@ asmtest.o : asmtest.asm
 
 
 test_h : test_h.o to_dec.o to_dec_c.o
-	g++ -g -o test_h test_h.o to_dec.o to_dec_c.o 
+	g++ -g -o test_h test_h.o to_dec.o to_dec_c.o $(extralibs)
 
 to_dec.o : to_dec.asm
 
