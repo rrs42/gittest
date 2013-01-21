@@ -1,4 +1,6 @@
 
+extern "C" {
+
 
 long to_dec_c( unsigned long val, char * buffer, long buffer_len )
 {
@@ -20,3 +22,8 @@ long to_dec_c( unsigned long val, char * buffer, long buffer_len )
 
 	return len;
 }
+
+
+}
+
+
