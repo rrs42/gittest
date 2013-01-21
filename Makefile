@@ -2,13 +2,19 @@
 all : test_h 
 .PHONY: all
 
+ifeq ($(OS),mac)
+  binfmt=macho64
+else
+  binfmt=elf64
+endif
 
 clean : 
-	rm asmtest test_h *.o *.lst
+	rm -f asmtest test_h *.o *.lst
 .PHONY: clean
 
 %.o : %.asm
-	nasm -f macho64 -g -l $(basename $<).lst -o $@ $<
+	echo "Binary format : " $OSTYPE
+	nasm -f $(binfmt) -g -l $(basename $<).lst -o $@ $<
 
 asmtest : asmtest.o
 	ld -o $@ $^
